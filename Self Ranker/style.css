@@ -1,3 +1,7 @@
+p{
+	background-color: #B9C3EA;
+}
+
 .button{
 	background-color:#B9C3EA;
 	font-family:"Abril Fatface";
@@ -17,3 +21,4 @@
 .button:active{
 	opacity:.7;
 }
+
