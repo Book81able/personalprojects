@@ -35,7 +35,6 @@ function One() {
 		list.splice(firstNum,1);
 		splice(list,firstPlay,secNum);
 	}
-	print(list);
 	newComparisons();
 }
 
@@ -44,7 +43,6 @@ function Two(){
 		list.splice(secNum,1);
 		splice(list,secPlay,firstNum);
 	}
-	print(list);
 	newComparisons();
 }
 
