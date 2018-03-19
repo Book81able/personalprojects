@@ -14,6 +14,7 @@ data = loadJSON("plays.json");
 function setup(){
 	print(data.list);
 	list = data.list;
+	shuffle(list,true);
 	createCanvas(0,0)
 	bOne = document.getElementById("b1");
 	bTwo = document.getElementById("b2");
