@@ -7,12 +7,12 @@ var firstPlay;
 var secPlay;
 var list;
 var elementList = [];
+var alreadyComps = [];
 function preload(){
 data = loadJSON("plays.json");
 }
 
 function setup(){
-	print(data.list);
 	list = data.list;
 	shuffle(list,true);
 	createCanvas(0,0)
@@ -51,12 +51,19 @@ function newComparisons(){
 	secNum = floor(random(list.length))
 	firstPlay = list[firstNum];
 	secPlay = list[secNum];
+	for(var i = 0;i<alreadyComps.length;i++){
+		if(firstPlay + secPlay == alreadyComps[i] || secPlay + firstPlay == alreadyComps[i]){
+			newComparisons();
+			return;
+		}
+	}
 	if(firstPlay == secPlay){
 		newComparisons();
 	}else{
 		bOne.innerHTML = firstPlay;
 		bTwo.innerHTML = secPlay;
 	}
+	alreadyComps.push(firstPlay + secPlay);
 	for(var i = 0;i<list.length;i++){
 		elementList[i].remove()
 		elementList[i] = createElement("p",i+1 + ". " + list[i]);
