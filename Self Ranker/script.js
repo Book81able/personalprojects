@@ -46,7 +46,7 @@ function Two(){
 	if(secNum > firstNum){
 		list.splice(secNum,1);
 		splice(list,secPlay,firstNum);
-		newComparisons("switch");
+		newComparisons("switches");
 	}else{
 		newComparisons("Null");
 	}
@@ -56,6 +56,9 @@ function newComparisons(test){
 	if(test == "switch"){
 		lastFN = secNum;
 		lastSN = secNum+1;
+	}else if(test == "switches"){
+		lastFN = firstNum+1;
+		lastSN = firstNum;
 	}else if(test == "Null"){
 		lastFN = firstNum;
 		lastSN = secNum;
