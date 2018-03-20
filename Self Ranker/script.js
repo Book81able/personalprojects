@@ -3,6 +3,8 @@ var bOne;
 var bTwo;
 var firstNum;
 var secNum;
+var lastFN;
+var lastSN;
 var firstPlay;
 var secPlay;
 var list;
@@ -34,19 +36,30 @@ function One() {
 	if(firstNum > secNum){
 		list.splice(firstNum,1);
 		splice(list,firstPlay,secNum);
+		newComparisons("switch");
+	}else{
+		newComparisons("Null");
 	}
-	newComparisons();
 }
 
 function Two(){
 	if(secNum > firstNum){
 		list.splice(secNum,1);
 		splice(list,secPlay,firstNum);
+		newComparisons("switch");
+	}else{
+		newComparisons("Null");
 	}
-	newComparisons();
 }
 
-function newComparisons(){
+function newComparisons(test){
+	if(test == "switch"){
+		lastFN = secNum;
+		lastSN = secNum+1;
+	}else if(test == "Null"){
+		lastFN = firstNum;
+		lastSN = secNum;
+	}
 	firstNum = floor(random(list.length))
 	secNum = floor(random(list.length))
 	firstPlay = list[firstNum];
@@ -59,13 +72,23 @@ function newComparisons(){
 	}
 	if(firstPlay == secPlay){
 		newComparisons();
+		return;
 	}else{
 		bOne.innerHTML = firstPlay;
 		bTwo.innerHTML = secPlay;
 	}
+
 	alreadyComps.push(firstPlay + secPlay);
 	for(var i = 0;i<list.length;i++){
 		elementList[i].remove()
 		elementList[i] = createElement("p",i+1 + ". " + list[i]);
 	}
+	elementList[firstNum].style('background-color', "#684a6d");
+	elementList[firstNum].style('color', "#ffffff");
+	elementList[secNum].style('background-color', "#684a6d");
+	elementList[secNum].style('color', "#ffffff");
+	elementList[lastFN].style('background-color', "#e4a3ed");
+	elementList[lastFN].style('color', "#ffffff");
+	elementList[lastSN].style('background-color', "#e4a3ed");
+	elementList[lastSN].style('color', "#ffffff");
 }
