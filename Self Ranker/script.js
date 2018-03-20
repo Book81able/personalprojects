@@ -8,6 +8,7 @@ var lastSN;
 var firstPlay;
 var secPlay;
 var list;
+var compra = 0;
 var elementList = [];
 var alreadyComps = [];
 function preload(){
@@ -20,6 +21,11 @@ function setup(){
 	createCanvas(0,0)
 	bOne = document.getElementById("b1");
 	bTwo = document.getElementById("b2");
+	comps = document.getElementById("comps");
+	for(var i = 0; i<data.list.length;i++){
+		compra += i;
+	}
+	comps.innerHTML = "Comparisons Left: " + compra;
 	bOne.onclick = function(){
 		One();
 	}
@@ -40,6 +46,8 @@ function One() {
 	}else{
 		newComparisons("Null");
 	}
+	compra--;
+	comps.innerHTML = "Comparisons Left: " + compra;
 }
 
 function Two(){
@@ -50,6 +58,8 @@ function Two(){
 	}else{
 		newComparisons("Null");
 	}
+	compra--;
+	comps.innerHTML = "Comparisons Left: " + compra;
 }
 
 function newComparisons(test){
@@ -86,12 +96,16 @@ function newComparisons(test){
 		elementList[i].remove()
 		elementList[i] = createElement("p",i+1 + ". " + list[i]);
 	}
-	elementList[firstNum].style('background-color', "#684a6d");
-	elementList[firstNum].style('color', "#ffffff");
-	elementList[secNum].style('background-color', "#684a6d");
-	elementList[secNum].style('color', "#ffffff");
+	styles();
+}
+
+function styles(){
 	elementList[lastFN].style('background-color', "#e4a3ed");
 	elementList[lastFN].style('color', "#ffffff");
 	elementList[lastSN].style('background-color', "#e4a3ed");
 	elementList[lastSN].style('color', "#ffffff");
+	elementList[firstNum].style('background-color', "#684a6d");
+	elementList[firstNum].style('color', "#ffffff");
+	elementList[secNum].style('background-color', "#684a6d");
+	elementList[secNum].style('color', "#ffffff");
 }
