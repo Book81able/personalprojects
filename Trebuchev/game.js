@@ -1,4 +1,5 @@
 var treb;
+var rope;
 var stones = [];
 var bounces;
 
@@ -7,6 +8,7 @@ function setup(){
   	can.parent("sketch-holder");
   	angleMode(DEGREES);
   	treb = new Treb();
+  	rope = new Rope();
 }
 
 function draw(){
@@ -48,6 +50,8 @@ class Stone{
 		bounces = createVector(2,1);
 		if(this.postion.y>height-200-this.diam/2){
 			this.velo.y *= -1;
+			this.postion.y = height-200-this.diam/2
+			this.velo.mult(.8);
 		}
 		if(this.postion.y > .5*(width-this.postion.x+725)){
 			var PXV = bounces.mult(p5.Vector.dot(this.velo,bounces));
@@ -65,10 +69,11 @@ class Treb{
 		this.height = 100;
 		this.topX = this.x+(this.width/2);
 		this.topY = height-200-this.height;
-		this.theta = -30;
-		this.grav = .1;
+		this.theta = -60;
 		this.rotV = 0;
-
+		this.topArm = 90;
+		this.bottArm = 30;
+		this.grav = this.bottArm/100;
 	}
 	display(){
 		beginShape();
@@ -79,18 +84,36 @@ class Treb{
 		push();
 			translate(this.topX,this.topY);
 			rotate(this.theta);
-			line(-80,0,20,0);
+			line(-this.topArm,0,this.bottArm,0);
+			ellipse(this.bottArm+20,0,40);
 		pop();
+		rope.display(this.theta);
 	}
 	turn(){
 		this.rotV += this.grav*cos(this.theta);
 		this.theta += this.rotV;
-		this.rotV *= 1
+		this.rotV *= .99
 	}
 	throw(){
-		var stone = new Stone(80 * -cos(this.theta)+this.topX,80 * -sin(this.theta)+this.topY,
-					sin(this.theta)*this.rotV,
-					-cos(this.theta)*this.rotV);
+		var stone = new Stone(this.topArm * -cos(this.theta)+this.topX,this.topArm * -sin(this.theta)+this.topY,
+					sin(this.theta)*this.rotV*this.topArm/80,
+					-cos(this.theta)*this.rotV*this.topArm/80);
 		stones.push(stone);
+	}
+}
+
+class Rope{
+	constructor(){
+		this.backTheta = 0;
+		this.length = 10;
+	}
+	display(trebTheta){
+		line(treb.topArm * -cos(trebTheta)+treb.topX, treb.topArm * -sin(trebTheta)+treb.topY,0,0);
+	}
+	move(){
+		
+	}
+	throw(){
+
 	}
 }
