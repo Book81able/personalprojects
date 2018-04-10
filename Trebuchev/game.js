@@ -1,5 +1,6 @@
 var treb;
-var stone;
+var stones = [];
+var bounces;
 
 function setup(){
 	var can = createCanvas(windowWidth,windowHeight);
@@ -12,12 +13,16 @@ function draw(){
 	background(255);
 	fill(0,200,50);
 	rect(0,height-200,width,200);
+	line(width-400,height-200,width,height-400);
 	fill(200,150,50);
 	treb.display();
 	treb.turn();
-	if(stone != null){
-		stone.display();
-		stone.move();
+	if(stones.length>0){
+		for(ston of stones){
+			ston.display();
+			ston.move();
+			ston.bounce();
+		}
 	}
 }
 
@@ -27,17 +32,29 @@ function mouseReleased(){
 
 class Stone{
 	constructor(_x,_y,v_x,v_y){
-		this.radius = 20;
+		this.diam = 20;
 		this.postion = createVector(_x,_y);
 		this.velo = createVector(2*v_x,2*v_y);
 		this.accel = createVector(0,.1);
 	}
 	display(){
-		ellipse(this.postion.x,this.postion.y,this.radius);
+		ellipse(this.postion.x,this.postion.y,this.diam);
 	}
 	move(){
 		this.postion.add(this.velo);
 		this.velo.add(this.accel);
+	}
+	bounce(){
+		bounces = createVector(2,1);
+		if(this.postion.y>height-200-this.diam/2){
+			this.velo.y *= -1;
+		}
+		if(this.postion.y > .5*(width-this.postion.x+725)){
+			var PXV = bounces.mult(p5.Vector.dot(this.velo,bounces));
+			var projection = PXV.mult(-2/5);
+			this.velo.add(projection);
+			print(bounces);
+		}
 	}
 }
 
@@ -71,8 +88,9 @@ class Treb{
 		this.rotV *= 1
 	}
 	throw(){
-		stone = new Stone(80 * -cos(this.theta)+this.topX,80 * -sin(this.theta)+this.topY,
+		var stone = new Stone(80 * -cos(this.theta)+this.topX,80 * -sin(this.theta)+this.topY,
 					sin(this.theta)*this.rotV,
 					-cos(this.theta)*this.rotV);
+		stones.push(stone);
 	}
 }
