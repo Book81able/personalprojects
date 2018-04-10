@@ -30,7 +30,7 @@ class Stone{
 		this.radius = 20;
 		this.postion = createVector(_x,_y);
 		this.velo = createVector(2*v_x,2*v_y);
-		this.accel = createVector(0,1);
+		this.accel = createVector(0,.1);
 	}
 	display(){
 		ellipse(this.postion.x,this.postion.y,this.radius);
@@ -48,10 +48,10 @@ class Treb{
 		this.height = 100;
 		this.topX = this.x+(this.width/2);
 		this.topY = height-200-this.height;
-		this.theta = 0;
-		this.thetaV = 1;
-		this.thetaA = .03;
-		this.throwTheta = random(70,90);
+		this.theta = -30;
+		this.grav = .1;
+		this.rotV = 0;
+
 	}
 	display(){
 		beginShape();
@@ -66,12 +66,13 @@ class Treb{
 		pop();
 	}
 	turn(){
-		this.thetaV += this.thetaA;
-		this.theta += this.thetaV;
+		this.rotV += this.grav*cos(this.theta);
+		this.theta += this.rotV;
+		this.rotV *= 1
 	}
 	throw(){
 		stone = new Stone(80 * -cos(this.theta)+this.topX,80 * -sin(this.theta)+this.topY,
-					sin(this.theta)*this.thetaV,
-					-cos(this.theta)*this.thetaV);
+					sin(this.theta)*this.rotV,
+					-cos(this.theta)*this.rotV);
 	}
 }
