@@ -32,6 +32,14 @@ function mouseReleased(){
 	treb.throw();
 }
 
+function keyIsDown(){
+	if(keyCode == 37){
+		treb.move(-1);
+	}else if(keyCode == 39){
+		treb.move(1);
+	}
+}
+
 class Stone{
 	constructor(_x,_y,v_x,v_y){
 		this.diam = 20;
@@ -71,7 +79,7 @@ class Treb{
 		this.topY = height-200-this.height;
 		this.theta = -60;
 		this.rotV = 0;
-		this.topArm = 90;
+		this.topArm = 80;
 		this.bottArm = 30;
 		this.grav = this.bottArm/100;
 	}
@@ -84,10 +92,11 @@ class Treb{
 		push();
 			translate(this.topX,this.topY);
 			rotate(this.theta);
-			line(-this.topArm,0,this.bottArm,0);
+			line(-this.topArm+20,0,this.bottArm,0);
+			bezier(-this.topArm+20,0,-this.topArm+20,20,-this.topArm-20,0,-this.topArm-20,-20);
 			ellipse(this.bottArm+20,0,40);
 		pop();
-		rope.display(this.theta);
+		//rope.display(this.theta);
 	}
 	turn(){
 		this.rotV += this.grav*cos(this.theta);
@@ -99,6 +108,9 @@ class Treb{
 					sin(this.theta)*this.rotV*this.topArm/80,
 					-cos(this.theta)*this.rotV*this.topArm/80);
 		stones.push(stone);
+	}
+	move(change){
+		this.x += change*1
 	}
 }
 
