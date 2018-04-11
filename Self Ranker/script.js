@@ -12,7 +12,7 @@ var compra = 0;
 var elementList = [];
 var alreadyComps = [];
 function preload(){
-data = loadJSON("Datas/sondheim.json");
+data = loadJSON("Datas/plays.json");
 }
 
 function setup(){

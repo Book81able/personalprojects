@@ -1,5 +1,4 @@
 var treb;
-var rope;
 var stones = [];
 var bounces;
 
@@ -8,7 +7,6 @@ function setup(){
   	can.parent("sketch-holder");
   	angleMode(DEGREES);
   	treb = new Treb();
-  	rope = new Rope();
 }
 
 function draw(){
@@ -32,14 +30,6 @@ function mouseReleased(){
 	treb.throw();
 }
 
-function keyIsDown(){
-	if(keyCode == 37){
-		treb.move(-1);
-	}else if(keyCode == 39){
-		treb.move(1);
-	}
-}
-
 class Stone{
 	constructor(_x,_y,v_x,v_y){
 		this.diam = 20;
@@ -51,21 +41,26 @@ class Stone{
 		ellipse(this.postion.x,this.postion.y,this.diam);
 	}
 	move(){
+		//Set's the position of the stone based on velocity and changes the velocity based on accelration
 		this.postion.add(this.velo);
 		this.velo.add(this.accel);
 	}
 	bounce(){
 		bounces = createVector(2,1);
+		// Reflection if the ball hits the ground
 		if(this.postion.y>height-200-this.diam/2){
 			this.velo.y *= -1;
 			this.postion.y = height-200-this.diam/2
+			// Drops the velocity by 20% everytime the ball bounces
 			this.velo.mult(.8);
 		}
-		if(this.postion.y > .5*(width-this.postion.x+725)){
+		//Reflection off the slope
+		if(this.postion.y > .5*(width-this.postion.x+725)){ // Tests for the slope
+			//Runs the velocity through the projection equation
 			var PXV = bounces.mult(p5.Vector.dot(this.velo,bounces));
 			var projection = PXV.mult(-2/5);
+			//Sets the velocity to the new one.
 			this.velo.add(projection);
-			print(bounces);
 		}
 	}
 }
@@ -84,12 +79,14 @@ class Treb{
 		this.grav = this.bottArm/100;
 	}
 	display(){
+		//The Triangle
 		beginShape();
 			vertex(this.x,height-200);
 			vertex(this.x+this.width,height-200);
 			vertex(this.x+(this.width/2),height-200-this.height);
 		endShape();
 		push();
+		// The Arm
 			translate(this.topX,this.topY);
 			rotate(this.theta);
 			line(-this.topArm+20,0,this.bottArm,0);
@@ -99,33 +96,17 @@ class Treb{
 		//rope.display(this.theta);
 	}
 	turn(){
+		//Handles turning, basically setting accelration to gravity to it's projection realtive to the angle of the arm.
 		this.rotV += this.grav*cos(this.theta);
 		this.theta += this.rotV;
+		//Drops by 1% everyframe
 		this.rotV *= .99
 	}
 	throw(){
+		//Throws the stone perpidicular to the current angle of the arm
 		var stone = new Stone(this.topArm * -cos(this.theta)+this.topX,this.topArm * -sin(this.theta)+this.topY,
 					sin(this.theta)*this.rotV*this.topArm/80,
 					-cos(this.theta)*this.rotV*this.topArm/80);
 		stones.push(stone);
-	}
-	move(change){
-		this.x += change*1
-	}
-}
-
-class Rope{
-	constructor(){
-		this.backTheta = 0;
-		this.length = 10;
-	}
-	display(trebTheta){
-		line(treb.topArm * -cos(trebTheta)+treb.topX, treb.topArm * -sin(trebTheta)+treb.topY,0,0);
-	}
-	move(){
-		
-	}
-	throw(){
-
 	}
 }
