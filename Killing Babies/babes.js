@@ -16,5 +16,5 @@ function setup(){
 }
 
 function changeRed(){
-	elementList[2].remove();
+	print()
 }
