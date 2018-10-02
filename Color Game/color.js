@@ -1,7 +1,7 @@
 var colors = ["red","blue","green","black","pink","yellow","purple"];
 var p1, p2;
 var ding;
-var time = 5;
+var time = 90;
 
 function preload(){
 	ding = loadSound("Ding-Sound-Effect.mp3");
