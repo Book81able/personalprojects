@@ -12,7 +12,7 @@ var compra = 0;
 var elementList = [];
 var alreadyComps = [];
 function preload(){
-data = loadJSON("Datas/sondheim.json");
+data = loadJSON("Datas/jackbox.json");
 }
 
 function setup(){
