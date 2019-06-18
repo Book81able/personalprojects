@@ -12,7 +12,7 @@ var compra = 0;
 var elementList = [];
 var alreadyComps = [];
 function preload(){
-data = loadJSON("Datas/jackbox.json");
+data = loadJSON("Datas/olympics.json");
 }
 
 function setup(){
