@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>COVID-19 NY CHART</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="style.css">
+
+	</head>
+	<body>
+		<div>
+			<h1>Covid-19 Rates for New York City</h1>
+			<table>
+			<tr>
+				<td><button onclick="updateChart('totalcases')">Total Cases</button></td>
+				<td><button onclick="updateChart('CASE_COUNT')">Cases Per Day</button></td>
+				<td><button onclick="updateUpDown('ratecase')">Rate of Cases Per Day</button></td>
+			</tr>
+			<tr>
+				<td><button onclick="updateChart('totaldeaths')">Total Deaths</button></td>
+				<td><button onclick="updateChart('DEATH_COUNT')">Deaths Per Day</button></td>
+				<td><button onclick="updateUpDown('ratedeath','black')">Rate of Deaths Per Day</button></td>
+			</tr>
+
+			<tr>
+				<td><button onclick="updateChart('totalhosp')">Total Hospitalizations</button></td>
+				<td><button onclick="updateChart('HOSPITALIZED_COUNT')">Hospitalizations Per Day</button></td>
+				<td><button onclick="updateUpDown('ratehosp','green')">Rate of Hospiratlizations Per Day</button></td>
+			</tr>
+			</table>
+		</div>
+		<div>
+			<svg id="vis-svg"
+        		preserveAspectRatio="xMidYMid meet" class="marks" viewBox="0 0 960 520" style = "height:600px; flex: 6 0 600px">
+        	</svg>
+		</div>
+		<div>
+			<p>Soruce: <a href = https://raw.githubusercontent.com/nychealth/coronavirus-data/master/case-hosp-death.csv>NYChealth Covid data</a></p>
+		</div>
+
+	<script src="https://d3js.org/d3.v5.js"></script>
+  	<script src ="viz.js"></script>
+</body>
+
+</html>

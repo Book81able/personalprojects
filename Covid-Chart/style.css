@@ -1,0 +1,22 @@
+button{
+	background-color:#B9C3EA;
+	font-family:"Abril Fatface";
+	border:none;
+	color:white;
+	padding: 5px 5px;
+	font-size: 20px;
+	border-radius:4px;
+	margin:4px;
+}
+
+button:hover{
+	background-color:#684a6d;
+}
+
+button:active{
+	opacity:.7;
+}
+
+svg{
+	margin:10px;
+}
