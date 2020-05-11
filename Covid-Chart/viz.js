@@ -2,6 +2,9 @@
 var width = 960;
 var height = 500;
 
+var barOn = true;
+var lineOn = false;
+
 var margin = {
     top: 20,
     right: 10,
@@ -27,7 +30,17 @@ var barChart,linePath,x,y,barH,barW;
 
 var fullDataset;
 
+var Tooltip = d3.select("#vis-svg")
+    .append("div")
+    .style("opacity", 0)
+    .attr("class", "tooltip")
+    .style("background-color", "white")
+    .style("border", "solid")
+    .style("border-width", "2px")
+    .style("border-radius", "5px")
+    .style("padding", "5px")
 
+    
 
 d3.csv("https://raw.githubusercontent.com/nychealth/coronavirus-data/master/case-hosp-death.csv").then(function(data){
   const cumulativeSum = (sum => value => sum += value)(0);
@@ -126,7 +139,7 @@ function drawBar(parameter){
   			.attr("x",function(d){
   				return x(d.DATE_OF_INTEREST)
   			})
-  			.style("fill", "blue");
+  			.style("fill", "lightblue");
 
   	barChart.transition(t)
   			.attr("height",function(d){
@@ -139,12 +152,13 @@ function drawBar(parameter){
     linePath = svg.append("path")
       .datum(fullDataset)
       .attr("fill", "none")
-      .attr("stroke", "steelblue")
+      .attr("stroke", "grey")
       .attr("stroke-width", 1.5)
       .attr("d", d3.line()
-        .x(function(d) { return x(d.DATE_OF_INTEREST) + margin.left })
+        .x(function(d) { return x(d.DATE_OF_INTEREST) + margin.left + x.bandwidth()/2 })
         .y(function(d) { return margin.top + y(d[parameter]) })
         )
+      .style("opacity",0);
 
   	space.append("g")
   		.attr("transform", "translate(0," + barH + ")")
@@ -175,7 +189,7 @@ function updateChart(parameter){
           return y(d[parameter]);
         })
 
-    linePath.transition(t).attr("d",d3.line().x(function(d) { return x(d.DATE_OF_INTEREST) + margin.left })
+    linePath.transition(t).attr("d",d3.line().x(function(d) { return x(d.DATE_OF_INTEREST) + margin.left + x.bandwidth()/2 })
         .y(function(d,i) { return margin.top + y(d[parameter])}));
 
     ySpace
@@ -183,7 +197,7 @@ function updateChart(parameter){
       .call(d3.axisLeft(y));
 }
 
-function updateUpDown(parameter,fillColor = "blue"){
+function updateUpDown(parameter,fillColor = "lightblue"){
     const t = d3.transition().duration(aniTime);
     space.transition(t);
 
@@ -219,6 +233,33 @@ function updateUpDown(parameter,fillColor = "blue"){
       .call(d3.axisLeft(y));
 }
 
+function toggleBar(){
+  const t = d3.transition().duration(aniTime);
+
+  if(barOn){
+    barOn = false;
+
+    barChart
+    .transition(t)
+    .style("opacity", 0);
+  }else{
+    barOn = true;
+    barChart.transition(t)
+    .style("opacity",1)
+  }
+}
+
+function toggleLine(){
+  const t = d3.transition().duration(aniTime);
+
+  if(lineOn){
+    lineOn = false;
+    linePath.transition(t).style("opacity",0);
+  }else{
+    lineOn = true;
+    linePath.transition(t).style("opacity",1);
+  }
+}
 
 
 

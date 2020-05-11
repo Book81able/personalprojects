@@ -1,6 +1,9 @@
+body{
+	margin: 0;
+}
 button{
-	background-color:#B9C3EA;
-	font-family:"Abril Fatface";
+	background-color:lightblue;
+	font-family:"Times New Roman";
 	border:none;
 	color:white;
 	padding: 5px 5px;
@@ -19,4 +22,9 @@ button:active{
 
 svg{
 	margin:10px;
+}
+
+.title{
+	background-color: lightblue;
+	padding: 10px;
 }
