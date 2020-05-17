@@ -13,7 +13,7 @@ var margin = {
     }
 var aniTime = 1000
 
-var parseDate = d3.timeParse("%m/%d/%y")
+var parseDate = d3.timeParse("%m/%d/%Y")
 
 var svg = d3
   .select("#vis-svg")
@@ -105,6 +105,7 @@ d3.csv("https://raw.githubusercontent.com/nychealth/coronavirus-data/master/case
 function drawBar(parameter){
 	svg.data();
 
+
   	barW = width - margin.right - margin.left
   	barH = height - margin.top - margin.bottom
 
@@ -124,6 +125,7 @@ function drawBar(parameter){
 
 
   	y.domain([d3.min(fullDataset,d => d[parameter]),d3.max(fullDataset,d => d[parameter])]);
+
 
   	barChart = space.selectAll("rect")
   			.data(fullDataset)
